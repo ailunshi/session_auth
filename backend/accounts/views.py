@@ -8,7 +8,6 @@ from django.utils.decorators import method_decorator
 from django.contrib import auth
 from .serializers import UserSerializer
 
-@method_decorator(csrf_protect, name='dispatch')
 class CheckAuthenticatedView(APIView):
     def get(self, request, format=None):
         user = self.request.user
@@ -70,7 +69,7 @@ class LoginView(APIView):
 
             if user is not None:
                 auth.login(request, user)
-                return Response({ 'success': 'User authenticated', 'username': username })
+                return Response({ 'success': 'User authenticated' })
             else:
                 return Response({ 'error': 'Error authenticating user' })
         except:
