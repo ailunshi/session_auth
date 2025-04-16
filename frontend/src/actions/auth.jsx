@@ -6,8 +6,47 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
+    AUTHENTICATED_SUCCESS,
+    AUTHENTICATED_FAIL,
+
 } from './types';
 import Cookies from 'js-cookie';
+import { load_user } from './profile';
+
+export const checkAuthenticated = () => async dispatch => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+    };
+
+    try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/accounts/authenticated`, config);
+
+        if (res.data.error || res.data.isAuthenticated === 'error') {
+            dispatch({
+                type: AUTHENTICATED_FAIL,
+                payload: false
+            });
+        }
+        else if (res.data.isAuthenticated === 'success') {
+            dispatch({
+                type: AUTHENTICATED_SUCCESS,
+                payload: true
+            });
+        }
+        else {
+            dispatch({
+                type: AUTHENTICATED_FAIL,
+                payload: false
+            });
+        }
+
+    } catch(err) {
+    }
+};
 
 export const login = (username, password) => async dispatch => {
     const config = {
@@ -26,11 +65,10 @@ export const login = (username, password) => async dispatch => {
 
         if (res.data.success) {
             dispatch({
-                type: LOGIN_SUCCESS,
-                payload: res.data.username
+                type: LOGIN_SUCCESS
             });
 
-            // load the user
+            dispatch(load_user());
         } else {
             dispatch({
                 type: LOGIN_FAIL

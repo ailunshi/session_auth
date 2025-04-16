@@ -4,22 +4,25 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
-    LOGOUT_FAIL
+    LOGOUT_FAIL,
+    AUTHENTICATED_SUCCESS,
+    AUTHENTICATED_FAIL,
 } from '../actions/types';
 
 const initialState = {
-    isAuthenticated: false,
-    username: '',
-    first_name: '',
-    last_name: '',
-    phone: '',
-    city: '',
+    isAuthenticated: null,
 };
 
 export default function(state = initialState, action) {
     const { type, payload } = action;
 
     switch(type) {
+        case AUTHENTICATED_SUCCESS:
+        case AUTHENTICATED_FAIL:
+            return {
+                ...state,
+                isAuthenticated: payload,
+            }
         case REGISTER_SUCCESS:
             return {
                 ...state,
@@ -28,14 +31,12 @@ export default function(state = initialState, action) {
         case LOGIN_SUCCESS:
             return {
                 ...state,
-                isAuthenticated: true,
-                username: payload
+                isAuthenticated: true
             }
         case LOGOUT_SUCCESS:
             return {
                 ...state,
-                isAuthenticated: false,
-                username: ''
+                isAuthenticated: false
             }
         case REGISTER_FAIL:
         case LOGIN_FAIL:
