@@ -49,6 +49,7 @@ export const checkAuthenticated = () => async dispatch => {
 };
 
 export const login = (username, password) => async dispatch => {
+
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -92,10 +93,6 @@ export const register = (username, password, re_password) => async dispatch => {
     };
 
     const body = JSON.stringify({ username, password, re_password});
-
-    console.log('CSRF Token: ', Cookies.get('csrftoken'));
-    console.log(' something please ');
-    console.log('env var: ', import.meta.env.VITE_API_URL);
 
     try {
         const res = await axios.post(`${import.meta.env.VITE_API_URL}/accounts/register`, body, config);

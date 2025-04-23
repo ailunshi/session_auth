@@ -1,6 +1,8 @@
 import {
     LOAD_USER_PROFILE_SUCCESS,
     LOAD_USER_PROFILE_FAIL,
+    UPDATE_USER_PROFILE_SUCCESS,
+    UPDATE_USER_PROFILE_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -16,6 +18,7 @@ export default function(state = initialState, action) {
 
     switch(type) {
         case LOAD_USER_PROFILE_SUCCESS:
+        case UPDATE_USER_PROFILE_SUCCESS:
             return {
                 ...state,
                 username: payload.username,
@@ -32,6 +35,10 @@ export default function(state = initialState, action) {
                 last_name: '',
                 phone: '',
                 city: '',
+            }
+        case UPDATE_USER_PROFILE_FAIL:
+            return {
+                ...state
             }
         default:
             return state
