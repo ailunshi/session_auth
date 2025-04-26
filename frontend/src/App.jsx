@@ -6,6 +6,8 @@ import Register from './containers/Register';
 import Login from './containers/Login';
 import Dashboard from './containers/Dashboard';
 
+import PrivateRoute from './hocs/PrivateRoute';
+
 import { Provider } from 'react-redux';
 import store from './store';
 
@@ -17,7 +19,14 @@ const App = () => (
                     <Route exact path='/' element={<Home />} />
                     <Route exact path='/register' element={<Register />} />
                     <Route exact path='/login' element={<Login />} />
-                    <Route exact path='/dashboard' element={<Dashboard />} />
+                    <Route
+                        exact path='/dashboard'
+                        element={
+                            <PrivateRoute>
+                                <Dashboard />
+                            </PrivateRoute>
+                        }
+                    />
                 </Routes>
             </Layout>
         </BrowserRouter>

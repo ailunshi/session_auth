@@ -8,6 +8,8 @@ import {
     LOGOUT_FAIL,
     AUTHENTICATED_SUCCESS,
     AUTHENTICATED_FAIL,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAIL,
 
 } from './types';
 import Cookies from 'js-cookie';
@@ -144,5 +146,39 @@ export const logout = () => async dispatch => {
             type: LOGOUT_FAIL
         });
 
+    }
+};
+
+export const delete_account = () => async dispatch => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': Cookies.get('csrftoken'),
+        },
+        withCredentials: true,
+    };
+
+    const body = JSON.stringify({
+        'withCredentials': true,
+    });
+    
+    try {   
+        const res = await axios.delete(`${import.meta.env.VITE_API_URL}/accounts/delete`, config, body);
+        
+        if (res.data.success) {
+            dispatch({
+                type: DELETE_USER_SUCCESS
+            
+            });
+        } else {
+            dispatch({
+                type: DELETE_USER_FAIL
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: DELETE_USER_FAIL
+        });
     }
 };

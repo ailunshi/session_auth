@@ -98,12 +98,12 @@ class DeleteAccountView(APIView):
         user = self.request.user
 
         try:
-            user = User.objects.filter(id=user.id).delete()
+            User.objects.filter(id=user.id).delete()
 
             return Response({ 'success': 'User deleted successfully'})
         except:
             return Response({ 'error': 'Something went wrong when trying to delete user' })
-        
+"""        
 class GetUsersView(APIView):
     permission_classes = (permissions.AllowAny, )
 
@@ -112,3 +112,4 @@ class GetUsersView(APIView):
 
         users = UserSerializer(users, many=True)
         return Response(users.data)
+"""

@@ -8,5 +8,5 @@ urlpatterns = [
     path('register', SignupView.as_view()),
     path('delete', DeleteAccountView.as_view()),
     path('csrf_cookie', GetCSRFToken.as_view()),
-    path('get_users', GetUsersView.as_view())
+    #path('get_users', GetUsersView.as_view())
 ]

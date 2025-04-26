@@ -1,15 +1,16 @@
 import { connect } from 'react-redux';
 import { useState } from 'react';
 import { update_profile } from '../actions/profile';
+import { delete_account } from '../actions/auth';
 
 const Dashboard = ({
+    delete_account,
     update_profile,
     first_name_global,
     last_name_global,
     phone_global,
     city_global
 }) => {
-    const [profileUpdated, setProfileUpdated] = useState(false);
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
@@ -24,12 +25,7 @@ const Dashboard = ({
     const onSubmit = e => {
         e.preventDefault();
 
-        const updateProfile = async () => {
-            await update_profile(first_name, last_name, phone, city);
-            setProfileUpdated(!profileUpdated);
-        };
-
-        updateProfile();
+        update_profile(first_name, last_name, phone, city);
     };
 
     
@@ -51,7 +47,7 @@ const Dashboard = ({
                 </div>
 
                 <div className='form-group'>
-                    <label className='form-label' htmlFor='last_name'>Last Name</label>
+                    <label className='form-label mt-3' htmlFor='last_name'>Last Name</label>
                     <input
                         className='form-control'
                         type='text'
@@ -63,7 +59,7 @@ const Dashboard = ({
                 </div>
 
                 <div className='form-group'>
-                    <label className='form-label' htmlFor='phone'>Phone</label>
+                    <label className='form-label mt-3' htmlFor='phone'>Phone</label>
                     <input
                         className='form-control'
                         type='text'
@@ -75,7 +71,7 @@ const Dashboard = ({
                 </div>
 
                 <div className='form-group'>
-                    <label className='form-label' htmlFor='city'>City</label>
+                    <label className='form-label mt-3' htmlFor='city'>City</label>
                     <input
                         className='form-control'
                         type='text'
@@ -88,6 +84,17 @@ const Dashboard = ({
 
                 <button className='btn btn-primary mt-3' type='submit'>Update Profile</button>
             </form>
+
+            <p className='mt-5'>
+                Click the button below to delete your user account.
+            </p>
+            <a 
+                className='btn btn-danger'
+                href='#!'
+                onClick={delete_account}
+            >
+                Delete Account
+            </a>
 
             
             
@@ -104,4 +111,7 @@ const mapStateToProps = state => ({
     city_global: state.profile.city,
 })
 
-export default connect(mapStateToProps, { update_profile })(Dashboard);
+export default connect(mapStateToProps, { 
+    delete_account,
+    update_profile 
+})(Dashboard);

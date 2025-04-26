@@ -7,6 +7,8 @@ import {
     LOGOUT_FAIL,
     AUTHENTICATED_SUCCESS,
     AUTHENTICATED_FAIL,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -34,6 +36,7 @@ export default function(state = initialState, action) {
                 isAuthenticated: true
             }
         case LOGOUT_SUCCESS:
+        case DELETE_USER_SUCCESS:
             return {
                 ...state,
                 isAuthenticated: false
@@ -41,6 +44,7 @@ export default function(state = initialState, action) {
         case REGISTER_FAIL:
         case LOGIN_FAIL:
         case LOGOUT_FAIL:
+        case DELETE_USER_FAIL:
             return state
         default:
             return state
